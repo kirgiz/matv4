@@ -1,5 +1,7 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { registerLocaleData } from '@angular/common';
+import locale from '@angular/common/locales/fr';
 
 import {
     Matv4SharedLibsModule,
@@ -33,4 +35,8 @@ import {
         JhiAlertErrorComponent
     ]
 })
-export class Matv4SharedCommonModule {}
+export class Matv4SharedCommonModule {
+    constructor() {
+        registerLocaleData(locale);
+    }
+}

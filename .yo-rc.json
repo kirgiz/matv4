@@ -4,7 +4,7 @@
       "packageName": "material.kirgiz.app",
       "nativeLanguage": "fr"
     },
-    "jhipsterVersion": "4.9.0",
+    "jhipsterVersion": "4.14.1",
     "baseName": "matv4",
     "packageName": "material.kirgiz.app",
     "packageFolder": "material/kirgiz/app",
@@ -70,6 +70,8 @@
     "languages": [
       "fr",
       "en"
-    ]
+    ],
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true
   }
 }
