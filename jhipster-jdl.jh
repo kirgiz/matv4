@@ -16,7 +16,7 @@ Name String maxlength(60) required
 
 entity Forexrates {
 Rate_Date LocalDate required,
-StraighRate Double required,
+StraighRate Double required
 }
 
 entity Thirdclassification {
@@ -95,13 +95,19 @@ Price Double,
 Comments String maxlength(500)
 }
 
+entity Dashboard{
+TransferDate LocalDate required,
+ProfitAndLoss Double,
+NumberOfItems Long
+}
+
 relationship OneToMany {
 Currency{companyBaseCurrency} to Company{baseCurrency(Name)  required},
 Currency{currencyRate} to Forexrates{rateForCurrency(Name)  required},
 Thirdclassification{thirdCategory} to Third{thirdClassif(Name) required},
 Addressclassification{addressCategory} to Address{addressClassif(Name) required},
 Transferclassification{materialhistoryCategory} to Materialhistory{TransferClassif(Name) required},
-Materialclassification{materialCategory} to Material{MaterialClassif(Name) required},
+Materialclassification{materialCategory} to Material{MaterialTypeDef(Name) required},
 Currency{materialBuyCurrency} to Material{buycurrency(ISOCode) required},
 Currency{materialSellCurrency} to Material{Sellcurrency(ISOCode) required},
 Currency{lotBuyCurrency} to Lot{buycurrencylot(ISOCode) required},
@@ -110,8 +116,9 @@ Third{materialhistoryfrom} to Materialhistory{warehousefrom(Name) required},
 Third{materialhistoryto} to Materialhistory{Warehouseto(Name) required},
 Civility{thirdCivility} to Third{civilityClassif(Name) required},
 Lot{materialLot} to Material{lotIdentifier(Code) required},
-Materialclassification{materialCategory} to Material{materialClassif(Code) required},
-Country{addressCountry} to Address{CountryAddress(Name)}
+Materialclassification{materialCateg} to Material{materialClassif(Code) required},
+Country{addressCountry} to Address{CountryAddress(Name)},
+Materialclassification{materialCat} to Material{MaterialTypeCat(Name) required}
 }
 
 
@@ -121,7 +128,7 @@ Third{addressthird} to Address{thirdaddress(Name)}
 }
 
 
-paginate Thirdclassification, Company, Country , Currency , Thirdclassification, Addressclassification, Workgroup , Usr , Transferclassification , Materialclassification with infinite-scroll
+paginate Thirdclassification, Company, Country , Currency , Thirdclassification, Addressclassification, Transferclassification , Materialclassification with infinite-scroll
 paginate Lot, Material, Materialhistory  with pagination
 
 dto * with mapstruct

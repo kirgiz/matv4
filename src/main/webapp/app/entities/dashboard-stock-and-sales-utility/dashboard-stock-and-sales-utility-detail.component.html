@@ -1,0 +1,34 @@
+
+<div *ngIf="dashboard">
+    <h2><span jhiTranslate="matv4App.dashboard.detail.title">Dashboard</span> {{dashboard.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="matv4App.dashboard.transferDate">Transfer Date</span></dt>
+        <dd>
+            <span>{{dashboard.transferDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv4App.dashboard.profitAndLoss">Profit And Loss</span></dt>
+        <dd>
+            <span>{{dashboard.profitAndLoss}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv4App.dashboard.numberOfItems">Number Of Items</span></dt>
+        <dd>
+            <span>{{dashboard.numberOfItems}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'dashboard-stock-and-sales-utility/'+ dashboard.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
