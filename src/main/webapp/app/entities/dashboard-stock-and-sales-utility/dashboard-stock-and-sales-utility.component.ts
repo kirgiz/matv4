@@ -39,9 +39,20 @@ dashboards: DashboardStockAndSalesUtility[];
                 );
             return;
        }
-        this.dashboardService.query().subscribe(
+        this.dashboardService.queryMaterialHistory().subscribe(
             (res: HttpResponse<DashboardStockAndSalesUtility[]>) => {
                 this.dashboards = res.body;
+
+                for (let entry of this.dashboards) {
+                    entry.numberOfItems=12;
+                }
+
+            /*  let d: DashboardStockAndSalesUtility;
+              d.numberOfItems=1;
+             d.profitAndLoss=12;
+              d.id=13;
+              this.dashboards.push(d);*/
+               
                 this.currentSearch = '';
             },
             (res: HttpErrorResponse) => this.onError(res.message)

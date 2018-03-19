@@ -7,6 +7,7 @@ import { JhiDateUtils } from 'ng-jhipster';
 
 import { DashboardStockAndSalesUtility } from './dashboard-stock-and-sales-utility.model';
 import { createRequestOption } from '../../shared';
+import { MaterialhistoryStockAndSalesUtilityService, MaterialhistoryStockAndSalesUtility } from '../materialhistory-stock-and-sales-utility';
 
 export type EntityResponseType = HttpResponse<DashboardStockAndSalesUtility>;
 
@@ -16,7 +17,7 @@ export class DashboardStockAndSalesUtilityService {
     private resourceUrl =  SERVER_API_URL + 'api/dashboards';
     private resourceSearchUrl = SERVER_API_URL + 'api/_search/dashboards';
 
-    constructor(private http: HttpClient, private dateUtils: JhiDateUtils) { }
+    constructor(private http: HttpClient, private dateUtils: JhiDateUtils, private matHistory: MaterialhistoryStockAndSalesUtilityService) { }
 
     create(dashboard: DashboardStockAndSalesUtility): Observable<EntityResponseType> {
         const copy = this.convert(dashboard);
@@ -49,6 +50,13 @@ export class DashboardStockAndSalesUtilityService {
         const options = createRequestOption(req);
         return this.http.get<DashboardStockAndSalesUtility[]>(this.resourceSearchUrl, { params: options, observe: 'response' })
             .map((res: HttpResponse<DashboardStockAndSalesUtility[]>) => this.convertArrayResponse(res));
+    }
+
+    
+    queryMaterialHistory(req?: any): Observable<HttpResponse<MaterialhistoryStockAndSalesUtility[]>> {
+        let t=this.matHistory.query();
+        console.log(t);
+        return this.matHistory.query();       
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
