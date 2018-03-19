@@ -37,7 +37,8 @@ public class CacheConfiguration {
     @Bean
     public JCacheManagerCustomizer cacheManagerCustomizer() {
         return cm -> {
-            cm.createCache("users", jcacheConfiguration);
+            cm.createCache(material.kirgiz.app.repository.UserRepository.USERS_BY_LOGIN_CACHE, jcacheConfiguration);
+            cm.createCache(material.kirgiz.app.repository.UserRepository.USERS_BY_EMAIL_CACHE, jcacheConfiguration);
             cm.createCache(material.kirgiz.app.domain.User.class.getName(), jcacheConfiguration);
             cm.createCache(material.kirgiz.app.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(material.kirgiz.app.domain.User.class.getName() + ".authorities", jcacheConfiguration);
