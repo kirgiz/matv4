@@ -54,9 +54,7 @@ export class DashboardStockAndSalesUtilityService {
 
     
     queryMaterialHistory(req?: any): Observable<HttpResponse<MaterialhistoryStockAndSalesUtility[]>> {
-        let t=this.matHistory.query();
-        console.log(t);
-        return this.matHistory.query();       
+              return this.matHistory.query();       
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {

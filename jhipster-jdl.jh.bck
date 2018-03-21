@@ -118,8 +118,7 @@ Civility{thirdCivility} to Third{civilityClassif(Name) required},
 Lot{materialLot} to Material{lotIdentifier(Code) required},
 Materialclassification{materialCateg} to Material{materialClassif(Code) required},
 Country{addressCountry} to Address{CountryAddress(Name)},
-Materialclassification{materialCat} to Material{MaterialTypeCat(Name) required},
-Third{WarehouseOut} to Dashboard{WarehouseOutg(Name) required}
+Materialclassification{materialCat} to Material{MaterialTypeCat(Name) required}
 }
 
 

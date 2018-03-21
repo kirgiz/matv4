@@ -7,6 +7,7 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { DashboardStockAndSalesUtility } from './dashboard-stock-and-sales-utility.model';
 import { DashboardStockAndSalesUtilityService } from './dashboard-stock-and-sales-utility.service';
 import { Principal } from '../../shared';
+import { MaterialhistoryStockAndSalesUtility } from 'src/main/webapp/app/entities/materialhistory-stock-and-sales-utility';
 
 @Component({
     selector: 'jhi-dashboard-stock-and-sales-utility',
@@ -14,6 +15,8 @@ import { Principal } from '../../shared';
 })
 export class DashboardStockAndSalesUtilityComponent implements OnInit, OnDestroy {
 dashboards: DashboardStockAndSalesUtility[];
+transfers: MaterialhistoryStockAndSalesUtility[];
+summary: Map<String,DashboardStockAndSalesUtility>;//=new Map();
     currentAccount: any;
     eventSubscriber: Subscription;
     currentSearch: string;
@@ -40,19 +43,19 @@ dashboards: DashboardStockAndSalesUtility[];
             return;
        }
         this.dashboardService.queryMaterialHistory().subscribe(
-            (res: HttpResponse<DashboardStockAndSalesUtility[]>) => {
-                this.dashboards = res.body;
-
-                for (let entry of this.dashboards) {
-                    entry.numberOfItems=12;
-                }
-
-            /*  let d: DashboardStockAndSalesUtility;
-              d.numberOfItems=1;
-             d.profitAndLoss=12;
-              d.id=13;
-              this.dashboards.push(d);*/
-               
+            (res: HttpResponse<MaterialhistoryStockAndSalesUtility[]>) => {
+                this.transfers = res.body;
+this.summary=new Map();
+                this.dashboards=new Array<DashboardStockAndSalesUtility>();
+                for (let entry of this.transfers) {
+                                   let dte: Date =new Date(entry.creationDate);  
+                                   let year =  dte.getFullYear.toString;
+                                   console.log(dte);   
+                                   console.log(year);        
+                                   let num=parseInt((String)(dte.getFullYear().toString()).concat((String)(dte.getMonth().toString())));
+                                   console.log((String)(dte.getFullYear().toString()));
+                    this.dashboards.push(new DashboardStockAndSalesUtility(num,entry.creationDate,12,1));
+                }     
                 this.currentSearch = '';
             },
             (res: HttpErrorResponse) => this.onError(res.message)
