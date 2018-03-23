@@ -9,6 +9,7 @@ import { Matv4TestModule } from '../../../test.module';
 import { DashboardStockAndSalesUtilityDialogComponent } from '../../../../../../main/webapp/app/entities/dashboard-stock-and-sales-utility/dashboard-stock-and-sales-utility-dialog.component';
 import { DashboardStockAndSalesUtilityService } from '../../../../../../main/webapp/app/entities/dashboard-stock-and-sales-utility/dashboard-stock-and-sales-utility.service';
 import { DashboardStockAndSalesUtility } from '../../../../../../main/webapp/app/entities/dashboard-stock-and-sales-utility/dashboard-stock-and-sales-utility.model';
+import { ThirdStockAndSalesUtilityService } from '../../../../../../main/webapp/app/entities/third-stock-and-sales-utility';
 
 describe('Component Tests', () => {
 
@@ -24,6 +25,7 @@ describe('Component Tests', () => {
                 imports: [Matv4TestModule],
                 declarations: [DashboardStockAndSalesUtilityDialogComponent],
                 providers: [
+                    ThirdStockAndSalesUtilityService,
                     DashboardStockAndSalesUtilityService
                 ]
             })

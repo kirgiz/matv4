@@ -4,6 +4,8 @@ package material.kirgiz.app.service.dto;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -19,6 +21,10 @@ public class DashboardDTO implements Serializable {
     private Double profitAndLoss;
 
     private Long numberOfItems;
+
+    private Long warehouseOutgId;
+
+    private String warehouseOutgName;
 
     public Long getId() {
         return id;
@@ -50,6 +56,22 @@ public class DashboardDTO implements Serializable {
 
     public void setNumberOfItems(Long numberOfItems) {
         this.numberOfItems = numberOfItems;
+    }
+
+    public Long getWarehouseOutgId() {
+        return warehouseOutgId;
+    }
+
+    public void setWarehouseOutgId(Long thirdId) {
+        this.warehouseOutgId = thirdId;
+    }
+
+    public String getWarehouseOutgName() {
+        return warehouseOutgName;
+    }
+
+    public void setWarehouseOutgName(String thirdName) {
+        this.warehouseOutgName = thirdName;
     }
 
     @Override

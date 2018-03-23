@@ -53,6 +53,11 @@ public class Third implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Materialhistory> materialhistorytos = new HashSet<>();
 
+    @OneToMany(mappedBy = "warehouseOutg")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Dashboard> warehouseOuts = new HashSet<>();
+
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "third_addressthird",
@@ -164,6 +169,31 @@ public class Third implements Serializable {
 
     public void setMaterialhistorytos(Set<Materialhistory> materialhistories) {
         this.materialhistorytos = materialhistories;
+    }
+
+    public Set<Dashboard> getWarehouseOuts() {
+        return warehouseOuts;
+    }
+
+    public Third warehouseOuts(Set<Dashboard> dashboards) {
+        this.warehouseOuts = dashboards;
+        return this;
+    }
+
+    public Third addWarehouseOut(Dashboard dashboard) {
+        this.warehouseOuts.add(dashboard);
+        dashboard.setWarehouseOutg(this);
+        return this;
+    }
+
+    public Third removeWarehouseOut(Dashboard dashboard) {
+        this.warehouseOuts.remove(dashboard);
+        dashboard.setWarehouseOutg(null);
+        return this;
+    }
+
+    public void setWarehouseOuts(Set<Dashboard> dashboards) {
+        this.warehouseOuts = dashboards;
     }
 
     public Set<Address> getAddressthirds() {

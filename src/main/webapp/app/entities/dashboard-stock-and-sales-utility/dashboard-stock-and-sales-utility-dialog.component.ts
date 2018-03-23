@@ -4,11 +4,12 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { DashboardStockAndSalesUtility } from './dashboard-stock-and-sales-utility.model';
 import { DashboardStockAndSalesUtilityPopupService } from './dashboard-stock-and-sales-utility-popup.service';
 import { DashboardStockAndSalesUtilityService } from './dashboard-stock-and-sales-utility.service';
+import { ThirdStockAndSalesUtility, ThirdStockAndSalesUtilityService } from '../third-stock-and-sales-utility';
 
 @Component({
     selector: 'jhi-dashboard-stock-and-sales-utility-dialog',
@@ -18,17 +19,23 @@ export class DashboardStockAndSalesUtilityDialogComponent implements OnInit {
 
     dashboard: DashboardStockAndSalesUtility;
     isSaving: boolean;
+
+    thirds: ThirdStockAndSalesUtility[];
     transferDateDp: any;
 
     constructor(
         public activeModal: NgbActiveModal,
+        private jhiAlertService: JhiAlertService,
         private dashboardService: DashboardStockAndSalesUtilityService,
+        private thirdService: ThirdStockAndSalesUtilityService,
         private eventManager: JhiEventManager
     ) {
     }
 
     ngOnInit() {
         this.isSaving = false;
+        this.thirdService.query()
+            .subscribe((res: HttpResponse<ThirdStockAndSalesUtility[]>) => { this.thirds = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     clear() {
@@ -59,6 +66,14 @@ export class DashboardStockAndSalesUtilityDialogComponent implements OnInit {
 
     private onSaveError() {
         this.isSaving = false;
+    }
+
+    private onError(error: any) {
+        this.jhiAlertService.error(error.message, null, null);
+    }
+
+    trackThirdById(index: number, item: ThirdStockAndSalesUtility) {
+        return item.id;
     }
 }
 

@@ -7,7 +7,7 @@ import { JhiDateUtils } from 'ng-jhipster';
 
 import { DashboardStockAndSalesUtility } from './dashboard-stock-and-sales-utility.model';
 import { createRequestOption } from '../../shared';
-import { MaterialhistoryStockAndSalesUtilityService, MaterialhistoryStockAndSalesUtility } from '../materialhistory-stock-and-sales-utility';
+import { MaterialhistoryStockAndSalesUtility, MaterialhistoryStockAndSalesUtilityService } from '../materialhistory-stock-and-sales-utility';
 
 export type EntityResponseType = HttpResponse<DashboardStockAndSalesUtility>;
 
@@ -42,6 +42,10 @@ export class DashboardStockAndSalesUtilityService {
             .map((res: HttpResponse<DashboardStockAndSalesUtility[]>) => this.convertArrayResponse(res));
     }
 
+    queryMaterialHistory(req?: any): Observable<HttpResponse<MaterialhistoryStockAndSalesUtility[]>> {
+        return this.matHistory.query();       
+}
+
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }
@@ -50,11 +54,6 @@ export class DashboardStockAndSalesUtilityService {
         const options = createRequestOption(req);
         return this.http.get<DashboardStockAndSalesUtility[]>(this.resourceSearchUrl, { params: options, observe: 'response' })
             .map((res: HttpResponse<DashboardStockAndSalesUtility[]>) => this.convertArrayResponse(res));
-    }
-
-    
-    queryMaterialHistory(req?: any): Observable<HttpResponse<MaterialhistoryStockAndSalesUtility[]>> {
-              return this.matHistory.query();       
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {

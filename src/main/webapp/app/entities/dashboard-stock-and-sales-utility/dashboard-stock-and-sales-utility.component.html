@@ -33,6 +33,7 @@
             <th><span jhiTranslate="matv4App.dashboard.transferDate">Transfer Date</span></th>
             <th><span jhiTranslate="matv4App.dashboard.profitAndLoss">Profit And Loss</span></th>
             <th><span jhiTranslate="matv4App.dashboard.numberOfItems">Number Of Items</span></th>
+            <th><span jhiTranslate="matv4App.dashboard.warehouseOutg">Warehouse Outg</span></th>
             <th></th>
             </tr>
             </thead>
@@ -42,6 +43,11 @@
                 <td>{{dashboard.transferDate | date:'mediumDate'}}</td>
                 <td>{{dashboard.profitAndLoss}}</td>
                 <td>{{dashboard.numberOfItems}}</td>
+                <td>
+                    <div *ngIf="dashboard.warehouseOutgId">
+                        <a [routerLink]="['../third-stock-and-sales-utility', dashboard.warehouseOutgId  ]" >{{dashboard.warehouseOutgName}}</a>
+                    </div>
+                </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

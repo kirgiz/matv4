@@ -19,6 +19,7 @@ public interface ThirdMapper extends EntityMapper<ThirdDTO, Third> {
 
     @Mapping(target = "materialhistoryfroms", ignore = true)
     @Mapping(target = "materialhistorytos", ignore = true)
+    @Mapping(target = "warehouseOuts", ignore = true)
     @Mapping(source = "thirdClassifId", target = "thirdClassif")
     @Mapping(source = "civilityClassifId", target = "civilityClassif")
     Third toEntity(ThirdDTO thirdDTO);

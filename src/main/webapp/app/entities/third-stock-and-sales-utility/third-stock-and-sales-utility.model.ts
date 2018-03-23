@@ -8,6 +8,7 @@ export class ThirdStockAndSalesUtility implements BaseEntity {
         public comments?: string,
         public materialhistoryfroms?: BaseEntity[],
         public materialhistorytos?: BaseEntity[],
+        public warehouseOuts?: BaseEntity[],
         public addressthirds?: BaseEntity[],
         public thirdClassifName?: string,
         public thirdClassifId?: number,

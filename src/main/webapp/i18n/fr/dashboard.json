@@ -19,7 +19,8 @@
             },
             "transferDate": "Transfer Date",
             "profitAndLoss": "Profit And Loss",
-            "numberOfItems": "Number Of Items"
+            "numberOfItems": "Number Of Items",
+            "warehouseOutg": "Warehouse Outg"
         }
     }
 }

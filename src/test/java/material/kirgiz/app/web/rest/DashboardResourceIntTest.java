@@ -3,6 +3,7 @@ package material.kirgiz.app.web.rest;
 import material.kirgiz.app.Matv4App;
 
 import material.kirgiz.app.domain.Dashboard;
+import material.kirgiz.app.domain.Third;
 import material.kirgiz.app.repository.DashboardRepository;
 import material.kirgiz.app.service.DashboardService;
 import material.kirgiz.app.repository.search.DashboardSearchRepository;
@@ -103,6 +104,11 @@ public class DashboardResourceIntTest {
             .transferDate(DEFAULT_TRANSFER_DATE)
             .profitAndLoss(DEFAULT_PROFIT_AND_LOSS)
             .numberOfItems(DEFAULT_NUMBER_OF_ITEMS);
+        // Add required entity
+        Third warehouseOutg = ThirdResourceIntTest.createEntity(em);
+        em.persist(warehouseOutg);
+        em.flush();
+        dashboard.setWarehouseOutg(warehouseOutg);
         return dashboard;
     }
 

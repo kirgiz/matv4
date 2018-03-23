@@ -14,9 +14,9 @@ import { MaterialhistoryStockAndSalesUtility } from 'src/main/webapp/app/entitie
     templateUrl: './dashboard-stock-and-sales-utility.component.html'
 })
 export class DashboardStockAndSalesUtilityComponent implements OnInit, OnDestroy {
-dashboards: DashboardStockAndSalesUtility[];
-transfers: MaterialhistoryStockAndSalesUtility[];
-summary: Map<String,DashboardStockAndSalesUtility>;//=new Map();
+    summary: Map<any, any>;
+    transfers: MaterialhistoryStockAndSalesUtility[];
+    dashboards: DashboardStockAndSalesUtility[];
     currentAccount: any;
     eventSubscriber: Subscription;
     currentSearch: string;
@@ -31,6 +31,25 @@ summary: Map<String,DashboardStockAndSalesUtility>;//=new Map();
         this.currentSearch = this.activatedRoute.snapshot && this.activatedRoute.snapshot.params['search'] ?
             this.activatedRoute.snapshot.params['search'] : '';
     }
+
+  /*  loadAll() {
+        if (this.currentSearch) {
+            this.dashboardService.search({
+                query: this.currentSearch,
+                }).subscribe(
+                    (res: HttpResponse<DashboardStockAndSalesUtility[]>) => this.dashboards = res.body,
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+            return;
+       }
+        this.dashboardService.query().subscribe(
+            (res: HttpResponse<DashboardStockAndSalesUtility[]>) => {
+                this.dashboards = res.body;
+                this.currentSearch = '';
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+    }*/
 
     loadAll() {
         if (this.currentSearch) {
@@ -54,13 +73,14 @@ this.summary=new Map();
                                    console.log(year);        
                                    let num=parseInt((String)(dte.getFullYear().toString()).concat((String)(dte.getMonth().toString())));
                                    console.log((String)(dte.getFullYear().toString()));
-                    this.dashboards.push(new DashboardStockAndSalesUtility(num,entry.creationDate,12,1));
+                    this.dashboards.push(new DashboardStockAndSalesUtility(num,entry.creationDate,12,1,'fdsfdsf',12));
                 }     
                 this.currentSearch = '';
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
+
 
     search(query) {
         if (!query) {

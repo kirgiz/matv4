@@ -15,6 +15,8 @@ import {
     dashboardPopupRoute,
 } from './';
 
+import {MaterialhistoryStockAndSalesUtilityService} from '../materialhistory-stock-and-sales-utility';
+
 const ENTITY_STATES = [
     ...dashboardRoute,
     ...dashboardPopupRoute,
@@ -43,6 +45,7 @@ const ENTITY_STATES = [
     providers: [
         DashboardStockAndSalesUtilityService,
         DashboardStockAndSalesUtilityPopupService,
+MaterialhistoryStockAndSalesUtilityService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

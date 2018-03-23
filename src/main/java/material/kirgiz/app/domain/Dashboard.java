@@ -37,6 +37,10 @@ public class Dashboard implements Serializable {
     @Column(name = "number_of_items")
     private Long numberOfItems;
 
+    @ManyToOne(optional = false)
+    @NotNull
+    private Third warehouseOutg;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -83,6 +87,19 @@ public class Dashboard implements Serializable {
 
     public void setNumberOfItems(Long numberOfItems) {
         this.numberOfItems = numberOfItems;
+    }
+
+    public Third getWarehouseOutg() {
+        return warehouseOutg;
+    }
+
+    public Dashboard warehouseOutg(Third third) {
+        this.warehouseOutg = third;
+        return this;
+    }
+
+    public void setWarehouseOutg(Third third) {
+        this.warehouseOutg = third;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

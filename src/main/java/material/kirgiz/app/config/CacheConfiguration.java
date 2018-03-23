@@ -77,6 +77,7 @@ public class CacheConfiguration {
             cm.createCache(material.kirgiz.app.domain.Materialclassification.class.getName() + ".materialCats", jcacheConfiguration);
             cm.createCache(material.kirgiz.app.domain.Dashboard.class.getName(), jcacheConfiguration);
             cm.createCache(material.kirgiz.app.domain.Materialclassification.class.getName() + ".materialCategs", jcacheConfiguration);
+            cm.createCache(material.kirgiz.app.domain.Third.class.getName() + ".warehouseOuts", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }
