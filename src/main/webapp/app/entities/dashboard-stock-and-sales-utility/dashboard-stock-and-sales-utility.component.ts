@@ -7,7 +7,8 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { DashboardStockAndSalesUtility } from './dashboard-stock-and-sales-utility.model';
 import { DashboardStockAndSalesUtilityService } from './dashboard-stock-and-sales-utility.service';
 import { Principal } from '../../shared';
-import { MaterialhistoryStockAndSalesUtility } from 'src/main/webapp/app/entities/materialhistory-stock-and-sales-utility';
+import { MaterialhistoryStockAndSalesUtility } from '../materialhistory-stock-and-sales-utility';
+import {ThirdStockAndSalesUtilityService} from '../third-stock-and-sales-utility';
 
 @Component({
     selector: 'jhi-dashboard-stock-and-sales-utility',
@@ -65,16 +66,26 @@ export class DashboardStockAndSalesUtilityComponent implements OnInit, OnDestroy
             (res: HttpResponse<MaterialhistoryStockAndSalesUtility[]>) => {
                 this.transfers = res.body;
 this.summary=new Map();
+let lolo: Map<String , DashboardStockAndSalesUtility> = new Map<String , DashboardStockAndSalesUtility>();
                 this.dashboards=new Array<DashboardStockAndSalesUtility>();
                 for (let entry of this.transfers) {
-                                   let dte: Date =new Date(entry.creationDate);  
-                                   let year =  dte.getFullYear.toString;
-                                   console.log(dte);   
-                                   console.log(year);        
+                                   let dte: Date =new Date(entry.creationDate);
                                    let num=parseInt((String)(dte.getFullYear().toString()).concat((String)(dte.getMonth().toString())));
                                    console.log((String)(dte.getFullYear().toString()));
-                    this.dashboards.push(new DashboardStockAndSalesUtility(num,entry.creationDate,12,1,'fdsfdsf',12));
-                }     
+                                  let  key = (String)(num.toString()).concat((String)(entry.warehousefromId.toString()));
+                                  if (lolo.has(key)) {
+                                      let currentval: DashboardStockAndSalesUtility = lolo.get(key);
+                                      currentval.numberOfItems = currentval.numberOfItems + 1;
+                                   lolo.set(key, currentval);
+                } else {
+                    let currentval: DashboardStockAndSalesUtility = new DashboardStockAndSalesUtility(num,entry.creationDate,12,1,'fdsfdsf',12);
+                    lolo.set(key, currentval);
+                }
+                }
+
+                for (var valeur of Array.from(lolo.values())) {
+                    this.dashboards.push(valeur);
+                  }
                 this.currentSearch = '';
             },
             (res: HttpErrorResponse) => this.onError(res.message)
