@@ -8,6 +8,8 @@ import { JhiDateUtils } from 'ng-jhipster';
 import { DashboardStockAndSalesUtility } from './dashboard-stock-and-sales-utility.model';
 import { createRequestOption } from '../../shared';
 import { MaterialhistoryStockAndSalesUtility, MaterialhistoryStockAndSalesUtilityService } from '../materialhistory-stock-and-sales-utility';
+import { ThirdStockAndSalesUtilityService } from '../third-stock-and-sales-utility';
+import { ThirdStockAndSalesUtility } from 'src/main/webapp/app/entities/third-stock-and-sales-utility/third-stock-and-sales-utility.model';
 
 export type EntityResponseType = HttpResponse<DashboardStockAndSalesUtility>;
 
@@ -17,7 +19,8 @@ export class DashboardStockAndSalesUtilityService {
     private resourceUrl =  SERVER_API_URL + 'api/dashboards';
     private resourceSearchUrl = SERVER_API_URL + 'api/_search/dashboards';
 
-    constructor(private http: HttpClient, private dateUtils: JhiDateUtils, private matHistory: MaterialhistoryStockAndSalesUtilityService) { }
+    constructor(private http: HttpClient, private dateUtils: JhiDateUtils, private matHistory: MaterialhistoryStockAndSalesUtilityService,
+    private thirdData: ThirdStockAndSalesUtilityService) { }
 
     create(dashboard: DashboardStockAndSalesUtility): Observable<EntityResponseType> {
         const copy = this.convert(dashboard);
@@ -44,6 +47,11 @@ export class DashboardStockAndSalesUtilityService {
 
     queryMaterialHistory(req?: any): Observable<HttpResponse<MaterialhistoryStockAndSalesUtility[]>> {
         return this.matHistory.query();       
+}
+
+
+queryThird(req?: any):  Observable<HttpResponse<ThirdStockAndSalesUtility[]>> {
+    return this.thirdData.query();
 }
 
     delete(id: number): Observable<HttpResponse<any>> {

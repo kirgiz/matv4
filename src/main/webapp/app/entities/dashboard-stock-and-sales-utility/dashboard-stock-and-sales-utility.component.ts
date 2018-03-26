@@ -8,7 +8,7 @@ import { DashboardStockAndSalesUtility } from './dashboard-stock-and-sales-utili
 import { DashboardStockAndSalesUtilityService } from './dashboard-stock-and-sales-utility.service';
 import { Principal } from '../../shared';
 import { MaterialhistoryStockAndSalesUtility } from '../materialhistory-stock-and-sales-utility';
-import {ThirdStockAndSalesUtilityService} from '../third-stock-and-sales-utility';
+import { ThirdStockAndSalesUtilityService, ThirdStockAndSalesUtility } from '../third-stock-and-sales-utility';
 
 @Component({
     selector: 'jhi-dashboard-stock-and-sales-utility',
@@ -18,6 +18,7 @@ export class DashboardStockAndSalesUtilityComponent implements OnInit, OnDestroy
     summary: Map<any, any>;
     transfers: MaterialhistoryStockAndSalesUtility[];
     dashboards: DashboardStockAndSalesUtility[];
+    thirds: ThirdStockAndSalesUtility[];
     currentAccount: any;
     eventSubscriber: Subscription;
     currentSearch: string;
@@ -33,26 +34,8 @@ export class DashboardStockAndSalesUtilityComponent implements OnInit, OnDestroy
             this.activatedRoute.snapshot.params['search'] : '';
     }
 
-  /*  loadAll() {
-        if (this.currentSearch) {
-            this.dashboardService.search({
-                query: this.currentSearch,
-                }).subscribe(
-                    (res: HttpResponse<DashboardStockAndSalesUtility[]>) => this.dashboards = res.body,
-                    (res: HttpErrorResponse) => this.onError(res.message)
-                );
-            return;
-       }
-        this.dashboardService.query().subscribe(
-            (res: HttpResponse<DashboardStockAndSalesUtility[]>) => {
-                this.dashboards = res.body;
-                this.currentSearch = '';
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
-    }*/
-
     loadAll() {
+        
         if (this.currentSearch) {
             this.dashboardService.search({
                 query: this.currentSearch,
@@ -62,28 +45,36 @@ export class DashboardStockAndSalesUtilityComponent implements OnInit, OnDestroy
                 );
             return;
        }
+       
         this.dashboardService.queryMaterialHistory().subscribe(
             (res: HttpResponse<MaterialhistoryStockAndSalesUtility[]>) => {
                 this.transfers = res.body;
 this.summary=new Map();
 let lolo: Map<String , DashboardStockAndSalesUtility> = new Map<String , DashboardStockAndSalesUtility>();
-                this.dashboards=new Array<DashboardStockAndSalesUtility>();
+                this.dashboards=new Array<DashboardStockAndSalesUtility>();               
                 for (let entry of this.transfers) {
                                    let dte: Date =new Date(entry.creationDate);
                                    let num=parseInt((String)(dte.getFullYear().toString()).concat((String)(dte.getMonth().toString())));
-                                   console.log((String)(dte.getFullYear().toString()));
                                   let  key = (String)(num.toString()).concat((String)(entry.warehousefromId.toString()));
+                              let third =new ThirdStockAndSalesUtility();
+                               third = this.getthird(entry.warehousefromId);
                                   if (lolo.has(key)) {
                                       let currentval: DashboardStockAndSalesUtility = lolo.get(key);
                                       currentval.numberOfItems = currentval.numberOfItems + 1;
+                                      currentval.warehouseOutgId=third.id;
+                                      currentval.warehouseOutgName=third.name;
+                                      currentval.profitAndLoss=entry.price+currentval.profitAndLoss;
+                                  
                                    lolo.set(key, currentval);
                 } else {
-                    let currentval: DashboardStockAndSalesUtility = new DashboardStockAndSalesUtility(num,entry.creationDate,12,1,'fdsfdsf',12);
+                    let currentval: DashboardStockAndSalesUtility = new DashboardStockAndSalesUtility(num,entry.creationDate,entry.price,1,third.name,
+                        third.id);
                     lolo.set(key, currentval);
                 }
                 }
 
                 for (var valeur of Array.from(lolo.values())) {
+                    valeur.profitAndLoss=valeur.profitAndLoss/valeur.numberOfItems;
                     this.dashboards.push(valeur);
                   }
                 this.currentSearch = '';
@@ -91,6 +82,27 @@ let lolo: Map<String , DashboardStockAndSalesUtility> = new Map<String , Dashboa
             (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
+
+    getThirds() {
+        this.thirds=new Array<ThirdStockAndSalesUtility>();
+    this.dashboardService.queryThird().subscribe(
+        (res: HttpResponse<ThirdStockAndSalesUtility[]>) => {
+            this.thirds = res.body;  
+        },
+        (res: HttpErrorResponse) => this.onError(res.message)
+    );
+};
+
+getthird(id:number): ThirdStockAndSalesUtility {
+let third : ThirdStockAndSalesUtility=new ThirdStockAndSalesUtility();
+for (let mythird of this.thirds) {
+    if (mythird.id==id){
+        third=mythird;
+      
+        return third;
+    }
+}return third;
+}
 
 
     search(query) {
@@ -106,6 +118,7 @@ let lolo: Map<String , DashboardStockAndSalesUtility> = new Map<String , Dashboa
         this.loadAll();
     }
     ngOnInit() {
+        this.getThirds();
         this.loadAll();
         this.principal.identity().then((account) => {
             this.currentAccount = account;
