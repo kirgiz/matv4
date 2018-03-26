@@ -9,7 +9,7 @@ import { DashboardStockAndSalesUtility } from './dashboard-stock-and-sales-utili
 import { createRequestOption } from '../../shared';
 import { MaterialhistoryStockAndSalesUtility, MaterialhistoryStockAndSalesUtilityService } from '../materialhistory-stock-and-sales-utility';
 import { ThirdStockAndSalesUtilityService } from '../third-stock-and-sales-utility';
-import { ThirdStockAndSalesUtility } from 'src/main/webapp/app/entities/third-stock-and-sales-utility/third-stock-and-sales-utility.model';
+import { ThirdStockAndSalesUtility } from '../third-stock-and-sales-utility';
 
 export type EntityResponseType = HttpResponse<DashboardStockAndSalesUtility>;
 
