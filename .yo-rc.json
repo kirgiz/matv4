@@ -72,6 +72,8 @@
       "en"
     ],
     "cacheProvider": "ehcache",
-    "enableHibernateCache": true
+    "enableHibernateCache": true,
+    "herokuDeployType": "git",
+    "herokuAppName": "matv-4"
   }
 }
